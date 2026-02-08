@@ -1,0 +1,72 @@
+/* How it Works Sidebar */
+.how-it-works-sidebar {
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border-light);
+  overflow-y: auto;
+}
+
+/* Info Section Styles */
+.how-it-works-sidebar .info-section {
+  padding: 0;
+  background: none;
+  border: none;
+  margin: 0;
+}
+
+.how-it-works-sidebar .info-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.how-it-works-sidebar .info-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.how-it-works-sidebar .info-step {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.how-it-works-sidebar .step-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.how-it-works-sidebar .step-content h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.how-it-works-sidebar .step-content p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .how-it-works-sidebar {
+    display: block;
+    margin-top: var(--spacing-lg);
+  }
+}
