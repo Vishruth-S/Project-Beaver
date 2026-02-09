@@ -116,8 +116,8 @@
 
 .url-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
 }
 
 .url-input:disabled {
@@ -158,6 +158,114 @@
   font-size: 13px;
 }
 
+/* API Input Groups */
+.api-inputs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.api-input-group {
+  padding: 16px;
+  border: 2px solid #14B8A6;
+  border-radius: 8px;
+  background-color: rgba(20, 184, 166, 0.03);
+  transition: all 0.2s;
+}
+
+.api-input-group:hover {
+  border-color: #0D9488;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+  background-color: rgba(20, 184, 166, 0.05);
+}
+
+.api-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.api-input-number {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0F766E;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.remove-api-button {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-api-button:hover:not(:disabled) {
+  background-color: #ef4444;
+  color: white;
+}
+
+.remove-api-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.api-input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.api-name-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.api-name-input:focus {
+  outline: none;
+  border-color: #14B8A6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+.api-name-input:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.add-api-button {
+  padding: 10px 16px;
+  background: transparent;
+  border: 2px dashed #14B8A6;
+  color: #14B8A6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-api-button:hover:not(:disabled) {
+  background-color: #14B8A6;
+  color: white;
+  border-style: solid;
+}
+
+.add-api-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .modal-footer {
   padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
@@ -192,13 +300,13 @@
 }
 
 .btn-primary {
-  background-color: #3b82f6;
+  background-color: #14B8A6;
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #2563eb;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  background-color: #0D9488;
+  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -244,7 +352,7 @@
   }
 
   .url-input:focus {
-    border-color: #3b82f6;
+    border-color: #14B8A6;
   }
 
   .url-input:disabled {
@@ -262,5 +370,29 @@
 
   .btn-secondary:hover:not(:disabled) {
     background-color: #4b5563;
+  }
+
+  .api-input-group {
+    background-color: rgba(20, 184, 166, 0.05);
+    border-color: #14B8A6;
+  }
+
+  .api-input-group:hover {
+    border-color: #0D9488;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+  }
+
+  .api-name-input {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  .api-name-input:focus {
+    border-color: #14B8A6;
+  }
+
+  .api-name-input:disabled {
+    background-color: #1f2937;
   }
 }

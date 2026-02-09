@@ -287,16 +287,16 @@ const ChatInterface: React.FC = () => {
     }
   };
 
-  const handleAddUrls = async (urls: string[]) => {
+  const handleAddUrls = async (urlsWithLabel: Record<string, string[]>) => {
     if (!session) return;
 
     try {
-      const result = await addUrlsToCollection(session.collectionId, urls);
+      const result = await addUrlsToCollection(session.collectionId, urlsWithLabel);
       
       // Update session with new URLs and document count
       const updatedSession = updateSessionUrls(
         sessionId!,
-        urls,
+        urlsWithLabel,
         result.total_documents
       );
 
@@ -365,6 +365,74 @@ const ChatInterface: React.FC = () => {
   if (!session) {
     return <div>Loading...</div>;
   }
+
+  // Get starter questions based on example type
+  const getStarterQuestions = (): Array<{ label: string; prompt: string }> => {
+    switch (session.exampleType) {
+      case 'zoom-calendar':
+        return [
+          {
+            label: 'Create a zoom meeting and add to calendar?',
+            prompt: 'Show me how I can create a new Zoom meeting and then add its meeting link to a Google Calendar event. Walk me through both APIs.'
+          },
+          {
+            label: 'How do I create a Zoom meeting?',
+            prompt: 'Show me how to create a new Zoom meeting using the Zoom API. Include details about authentication and required parameters.'
+          },
+          {
+            label: 'How do I add an event to Google Calendar?',
+            prompt: 'How can I add a new event to Google Calendar using the Calendar API? What are the required fields and authentication steps?'
+          },
+        ];
+      case 'github-slack':
+        return [
+          {
+            label: 'How to send a slack message when PR is merged',
+            prompt: 'I want to send a message to a Slack channel whenever a pull request is merged in GitHub. Can you show me how using the GitHub API and the slack web API to do this?'
+          },
+          {
+            label: 'How do I authenticate with GitHub?',
+            prompt: 'Explain how to authenticate with the GitHub API. What are the different authentication methods available?'
+          },
+          {
+            label: 'Create a new channel in slack',
+            prompt: 'How do I create a new channel in Slack using the Slack API?'
+          }
+        ];
+      case 'weather-api':
+        return [
+          {
+            label: 'How to get current weather of a city?',
+            prompt: 'Show me how to get the current weather of a city using the Weather APIs'
+          },
+          {
+            label: 'How to get 7-day forecast?',
+            prompt: 'Show me how to get a 7-day weather forecast using the Weather APIs'
+          },
+          {
+            label: 'How to get historical weather data?',
+            prompt: 'How to get historical weather data? Show me how to retrieve historical weather data for a specific date and location using the Weather APIs.'
+          }
+        ];
+      default:
+        return [
+          {
+            label: 'How to get started with this API?',
+            prompt: 'I just loaded this documentation. What are the first steps I should take to start using this API?'
+          },
+          {
+            label: 'What are the rate limits?',
+            prompt: 'What are the rate limits for this API? How many requests can I make per hour and how should I handle rate limit errors?'
+          },
+          {
+            label: 'How do I handle errors?',
+            prompt: 'What are the common error codes in this API and how should I handle them? Provide examples of error responses and best practices.'
+          }
+        ];
+    }
+  };
+
+  const starterQuestions = getStarterQuestions();
 
   return (
     <div className="chat-interface">
@@ -462,24 +530,15 @@ const ChatInterface: React.FC = () => {
             <h3>Start a conversation</h3>
             <p>Ask questions about {session.name}</p>
             <div className="suggested-questions">
-              <button 
-                className="suggestion-chip"
-                onClick={() => setInput('How do I authenticate?')}
-              >
-                How do I authenticate?
-              </button>
-              <button 
-                className="suggestion-chip"
-                onClick={() => setInput('What are the rate limits?')}
-              >
-                What are the rate limits?
-              </button>
-              <button 
-                className="suggestion-chip"
-                onClick={() => setInput('How do I handle errors?')}
-              >
-                How do I handle errors?
-              </button>
+              {starterQuestions.map((question, index) => (
+                <button 
+                  key={index}
+                  className="suggestion-chip"
+                  onClick={() => setInput(question.prompt)}
+                >
+                  {question.label}
+                </button>
+              ))}
             </div>
           </div>
         ) : (

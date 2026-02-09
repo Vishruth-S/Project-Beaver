@@ -1,10 +1,12 @@
 /* How it Works Sidebar */
 .how-it-works-sidebar {
   background-color: var(--color-bg-secondary);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   padding: var(--spacing-lg);
-  border: 1px solid var(--color-border-light);
+  border-left: 1px solid var(--color-border-light);
   overflow-y: auto;
+  height: 100%;
+  max-height: 100%;
 }
 
 /* Info Section Styles */
@@ -61,6 +63,51 @@
   color: var(--color-text-secondary);
   margin: 0;
   line-height: 1.5;
+}
+
+/* Credits Section */
+.credits-section {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid var(--color-border-light);
+}
+
+.credits-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.credits-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.credit-item {
+  text-align: center;
+}
+
+.credit-link {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: var(--spacing-xs) 0;
+  border-radius: var(--radius-md);
+}
+
+.credit-link:hover {
+  color: var(--color-primary);
+  background-color: var(--color-bg-primary);
+}
+
+.credit-link strong {
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 /* Mobile Responsive */

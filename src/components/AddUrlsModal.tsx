@@ -1,55 +1,103 @@
 import React, { useState } from 'react';
 import './AddUrlsModal.css';
 
+interface ApiInput {
+  id: number;
+  label: string;
+  urls: string;
+}
+
 interface AddUrlsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (urls: string[]) => void;
+  onSubmit: (urlsWithLabel: Record<string, string[]>) => void;
   isLoading: boolean;
 }
 
 export function AddUrlsModal({ isOpen, onClose, onSubmit, isLoading }: AddUrlsModalProps) {
-  const [urlsText, setUrlsText] = useState('');
+  const [apiInputs, setApiInputs] = useState<ApiInput[]>([
+    { id: 1, label: '', urls: '' }
+  ]);
   const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
+  const addApiInput = () => {
+    const newId = Math.max(...apiInputs.map(api => api.id), 0) + 1;
+    setApiInputs([...apiInputs, { id: newId, label: '', urls: '' }]);
+  };
+
+  const removeApiInput = (id: number) => {
+    if (apiInputs.length > 1) {
+      setApiInputs(apiInputs.filter(api => api.id !== id));
+    }
+  };
+
+  const updateApiInput = (id: number, field: 'label' | 'urls', value: string) => {
+    setApiInputs(apiInputs.map(api => 
+      api.id === id ? { ...api, [field]: value } : api
+    ));
+  };
+
   const handleSubmit = () => {
     setError(null);
 
-    // Parse URLs from textarea (one per line)
-    const urls = urlsText
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
+    // Build urls_with_label object
+    const urlsWithLabel: Record<string, string[]> = {};
+    
+    for (const apiInput of apiInputs) {
+      const label = apiInput.label.trim();
+      const urls = apiInput.urls
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
 
-    // Validate URLs
-    if (urls.length === 0) {
-      setError('Please enter at least one URL');
-      return;
-    }
-
-    // Basic URL validation
-    const invalidUrls = urls.filter(url => {
-      try {
-        new URL(url);
-        return false;
-      } catch {
-        return true;
+      // Skip empty API inputs
+      if (!label && urls.length === 0) {
+        continue;
       }
-    });
 
-    if (invalidUrls.length > 0) {
-      setError(`Invalid URL(s): ${invalidUrls.slice(0, 3).join(', ')}${invalidUrls.length > 3 ? '...' : ''}`);
+      // Validate
+      if (!label && urls.length > 0) {
+        setError('Please provide an API name for all URL groups');
+        return;
+      }
+
+      if (label && urls.length === 0) {
+        setError('Please provide at least one URL for each API');
+        return;
+      }
+
+      // Basic URL validation
+      const invalidUrls = urls.filter(url => {
+        try {
+          new URL(url);
+          return false;
+        } catch {
+          return true;
+        }
+      });
+
+      if (invalidUrls.length > 0) {
+        setError(`Invalid URL(s) in ${label}: ${invalidUrls.slice(0, 2).join(', ')}${invalidUrls.length > 2 ? '...' : ''}`);
+        return;
+      }
+
+      urlsWithLabel[label] = urls;
+    }
+
+    // Validate that at least one API has been entered
+    if (Object.keys(urlsWithLabel).length === 0) {
+      setError('Please add at least one API with URLs');
       return;
     }
 
-    onSubmit(urls);
+    onSubmit(urlsWithLabel);
   };
 
   const handleClose = () => {
     if (!isLoading) {
-      setUrlsText('');
+      setApiInputs([{ id: 1, label: '', urls: '' }]);
       setError(null);
       onClose();
     }
@@ -60,6 +108,8 @@ export function AddUrlsModal({ isOpen, onClose, onSubmit, isLoading }: AddUrlsMo
       handleClose();
     }
   };
+
+  const hasValidInput = apiInputs.some(api => api.label.trim() && api.urls.trim());
 
   return (
     <div className="modal-overlay" onClick={handleClose} onKeyDown={handleKeyDown}>
@@ -78,18 +128,58 @@ export function AddUrlsModal({ isOpen, onClose, onSubmit, isLoading }: AddUrlsMo
 
         <div className="modal-body">
           <p className="modal-description">
-            Enter additional documentation URLs to include in this chat session (one per line):
+            Add more API documentation to this chat session. Label each API to help the assistant distinguish between them.
           </p>
 
-          <textarea
-            className="url-input"
-            value={urlsText}
-            onChange={(e) => setUrlsText(e.target.value)}
-            placeholder="https://docs.example.com/api/authentication&#10;https://docs.example.com/api/errors&#10;https://docs.example.com/api/webhooks"
-            rows={8}
-            disabled={isLoading}
-            autoFocus
-          />
+          <div className="api-inputs-container">
+            {apiInputs.map((apiInput, index) => (
+              <div key={apiInput.id} className="api-input-group">
+                <div className="api-input-header">
+                  <span className="api-input-number">API #{index + 1}</span>
+                  {apiInputs.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeApiInput(apiInput.id)}
+                      className="remove-api-button"
+                      disabled={isLoading}
+                      aria-label="Remove API"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+                
+                <div className="api-input-fields">
+                  <input
+                    type="text"
+                    value={apiInput.label}
+                    onChange={(e) => updateApiInput(apiInput.id, 'label', e.target.value)}
+                    placeholder="API Name (e.g., Zoom API)"
+                    className="api-name-input"
+                    disabled={isLoading}
+                  />
+
+                  <textarea
+                    value={apiInput.urls}
+                    onChange={(e) => updateApiInput(apiInput.id, 'urls', e.target.value)}
+                    placeholder="https://docs.example.com/api/authentication&#10;https://docs.example.com/api/errors&#10;https://docs.example.com/api/webhooks"
+                    rows={4}
+                    className="url-input"
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+            ))}
+
+            <button 
+              type="button"
+              onClick={addApiInput}
+              className="add-api-button"
+              disabled={isLoading}
+            >
+              + Add Another API
+            </button>
+          </div>
 
           {error && (
             <div className="error-message">
@@ -100,7 +190,12 @@ export function AddUrlsModal({ isOpen, onClose, onSubmit, isLoading }: AddUrlsMo
           )}
 
           <div className="url-count">
-            {urlsText.split('\n').filter(line => line.trim().length > 0).length} URL(s)
+            {Object.entries(
+              apiInputs.reduce((acc, api) => {
+                const urls = api.urls.split('\n').filter(line => line.trim().length > 0);
+                return acc + urls.length;
+              }, 0)
+            )} total URL(s) across {apiInputs.filter(api => api.label.trim() && api.urls.trim()).length} API(s)
           </div>
         </div>
 
@@ -115,7 +210,7 @@ export function AddUrlsModal({ isOpen, onClose, onSubmit, isLoading }: AddUrlsMo
           <button 
             className="btn btn-primary" 
             onClick={handleSubmit}
-            disabled={isLoading || urlsText.trim().length === 0}
+            disabled={isLoading || !hasValidInput}
           >
             {isLoading ? 'Adding...' : 'Add URLs'}
           </button>

@@ -30,6 +30,22 @@ const HowItWorksSidebar: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <div className="credits-section">
+        <h3 className="credits-title">Credits</h3>
+        <div className="credits-list">
+          <div className="credit-item">
+            <a href="https://jina.ai/" target="_blank" rel="noopener noreferrer" className="credit-link">
+              <strong>Jina</strong> - for parsing webpages
+            </a>
+          </div>
+          <div className="credit-item">
+            <a href="https://groq.com/" target="_blank" rel="noopener noreferrer" className="credit-link">
+              <strong>Groq</strong> - for LLM model
+            </a>
+          </div>
+        </div>
+      </div>
     </aside>
   );
 };
