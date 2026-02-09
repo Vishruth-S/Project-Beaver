@@ -144,7 +144,7 @@ export function useDocumentation() {
   ): Promise<IngestResponse> => {
     setLoading(true);
     setError(null);
-    setLoadingMessage('Fetching documentation... This may take 2-3 minutes');
+    setLoadingMessage('APItome is reading the documentation and preparing your collection...');
 
     try {
       const controller = new AbortController();
