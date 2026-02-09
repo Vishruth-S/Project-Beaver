@@ -19,13 +19,15 @@ export interface ChatSession {
   sessionId: string; // e.g., "stripe_session_1"
   name: string; // Display name
   url: string; // Original documentation URL (first URL for backward compatibility)
-  urls: string[]; // All documentation URLs
+  urls: string[]; // All documentation URLs (flat array for backward compatibility)
+  urlsWithLabel?: Record<string, string[]>; // API labels with their URLs
   collectionId: string; // Backend collection ID
   documentCount: number;
   pendingUrls: number;
   createdAt: string;
   lastActivity: string;
   messages: Message[];
+  exampleType?: string; // Type of example used (e.g., 'zoom-calendar', 'payment-apis')
 }
 
 const SESSIONS_KEY = 'chat_sessions';
@@ -80,12 +82,15 @@ export function generateSessionId(name: string): string {
 
 // Create a new session
 export function createSession(
-  urls: string[],
+  urlsWithLabel: Record<string, string[]>,
   collectionId: string,
   name: string,
   documentCount: number,
-  pendingUrls: number
+  pendingUrls: number,
+  exampleType?: string
 ): ChatSession {
+  // Flatten URLs for backward compatibility
+  const urls = Object.values(urlsWithLabel).flat();
   const url = urls[0]; // First URL for backward compatibility
   const now = new Date().toISOString();
   
@@ -97,12 +102,14 @@ export function createSession(
     name: name.trim(),
     url,
     urls,
+    urlsWithLabel,
     collectionId,
     documentCount,
     pendingUrls,
     createdAt: now,
     lastActivity: now,
-    messages: []
+    messages: [],
+    exampleType
   };
   
   saveSession(session);
@@ -147,7 +154,7 @@ export function deleteSession(sessionId: string): void {
 // Update session URLs and document count (for add-urls feature)
 export function updateSessionUrls(
   sessionId: string,
-  newUrls: string[],
+  newUrlsWithLabel: Record<string, string[]>,
   totalDocuments: number
 ): ChatSession | null {
   const sessions = getAllSessions();
@@ -157,13 +164,25 @@ export function updateSessionUrls(
   
   const session = sessions[sessionIndex];
   
-  // Merge new URLs (avoid duplicates)
-  const mergedUrls = Array.from(new Set([...session.urls, ...newUrls]));
+  // Merge new URLs with labels
+  const updatedUrlsWithLabel = { ...session.urlsWithLabel };
+  Object.entries(newUrlsWithLabel).forEach(([label, urls]) => {
+    if (updatedUrlsWithLabel[label]) {
+      // Merge URLs for existing label (avoid duplicates)
+      updatedUrlsWithLabel[label] = Array.from(new Set([...updatedUrlsWithLabel[label], ...urls]));
+    } else {
+      updatedUrlsWithLabel[label] = urls;
+    }
+  });
+  
+  // Flatten URLs for backward compatibility
+  const mergedUrls = Object.values(updatedUrlsWithLabel).flat();
   
   // Update session
   const updatedSession: ChatSession = {
     ...session,
     urls: mergedUrls,
+    urlsWithLabel: updatedUrlsWithLabel,
     documentCount: totalDocuments,
     lastActivity: new Date().toISOString()
   };

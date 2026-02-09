@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { StreamEvent } from '../types';
 
 // API Configuration
-const API_BASE_URL = 'https://api-docs-chatbot.onrender.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 const TIMEOUT_MS = 180000; // 3 minutes
 
 // Conversation History Configuration
@@ -56,13 +56,14 @@ function parseErrorResponse(response: Response, errorData: any): string {
 }
 
 interface IngestRequest {
-  // New format (preferred)
-  urls?: string[];
+  // New format with labels
+  urls_with_label?: Record<string, string[]>;
   collection_name?: string;
   
   // Old format (backward compatibility)
   url?: string;
   max_initial_pages?: number;
+  urls?: string[];
 }
 
 interface IngestResponse {
@@ -80,7 +81,7 @@ interface IngestResponse {
 
 interface AddUrlsRequest {
   collection_id: string;
-  urls: string[];
+  urls_with_label: Record<string, string[]>;
 }
 
 interface AddUrlsResponse {
@@ -276,7 +277,7 @@ export function useDocumentation() {
   // Add URLs to existing collection
   const addUrlsToCollection = useCallback(async (
     collectionId: string,
-    urls: string[]
+    urlsWithLabel: Record<string, string[]>
   ): Promise<AddUrlsResponse> => {
     setLoading(true);
     setError(null);
@@ -288,7 +289,7 @@ export function useDocumentation() {
 
       const requestBody: AddUrlsRequest = {
         collection_id: collectionId,
-        urls
+        urls_with_label: urlsWithLabel
       };
 
       const response = await fetch(`${API_BASE_URL}/api/ingest/add-urls`, {
