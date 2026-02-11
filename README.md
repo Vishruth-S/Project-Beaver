@@ -1,6 +1,6 @@
 [Front-end Repo]
 
-# APItome — The Multi-API Chatbot 🤖
+# APItome - The Multi-API Chatbot 🤖
 
 APItome is a RAG-based GenAI chatbot that unifies multiple public API documentations into a single conversational knowledge base. It enables developers to query, compare, and integrate multiple APIs without manually navigating extensive documentation.
 
