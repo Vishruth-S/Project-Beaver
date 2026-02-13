@@ -16,7 +16,7 @@ function parseErrorResponse(response: Response, errorData: any): string {
   // Rate limit error (429)
   if (status === 429) {
     const detail = errorData.detail || '10 per 1 hour';
-    return `Rate limit exceeded (${detail}). Please try again later.`;
+    return `Rate limit exceeded (${detail}). This project is just a preview and has limited rates. Please try again later.`;
   }
   
   // Server error (500)
