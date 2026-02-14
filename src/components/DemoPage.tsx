@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import './DemoPage.css';
 
 const DemoPage: React.FC = () => {
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
   return (
     <div className="demo-page">
