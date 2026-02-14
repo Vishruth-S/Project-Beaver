@@ -462,7 +462,7 @@ const ChatInterface: React.FC = () => {
             </svg>
             Go to Docs
           </a> */}
-          <button 
+          {/* <button 
             className="icon-button" 
             onClick={handleNewCollection}
             aria-label="New collection"
@@ -472,7 +472,7 @@ const ChatInterface: React.FC = () => {
               <line x1="10" y1="4" x2="10" y2="16"/>
               <line x1="4" y1="10" x2="16" y2="10"/>
             </svg>
-          </button>
+          </button> */}
         </div>
       </header>
 
@@ -802,6 +802,15 @@ const ChatInterface: React.FC = () => {
       {/* Input Area */}
       <footer className="chat-input-container">
         <form onSubmit={handleSubmit} className="chat-form">
+          {/* AI Disclaimer */}
+          <div className="ai-disclaimer">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="7" cy="7" r="6"/>
+              <path d="M7 4v3m0 2v.5"/>
+            </svg>
+            <span>AI can make mistakes. Some responses may not be completely accurate as this is an early preview.</span>
+          </div>
+
           {isRateLimited && (
             <div className="rate-limit-banner">
               <div className="rate-limit-banner-content">
