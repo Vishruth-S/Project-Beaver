@@ -1,0 +1,42 @@
+.app-footer {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer .heart {
+  color: #14B8A6;
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.app-footer .footer-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.app-footer .footer-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  10%, 30% {
+    transform: scale(1.1);
+  }
+  20%, 40% {
+    transform: scale(1);
+  }
+}

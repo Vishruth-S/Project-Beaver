@@ -164,6 +164,52 @@
   animation: fadeIn 0.5s ease-in;
 }
 
+.loading-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.loading-description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.loading-hint {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  opacity: 0.8;
+  margin-bottom: var(--spacing-md);
+}
+
+.fun-fact-container {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  animation: fadeIn 0.8s ease-in 0.3s both;
+}
+
+.fun-fact-header {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+  text-align: center;
+}
+
+.fun-fact-text {
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
 /* Page Header */
 .page-header {
   text-align: center;
