@@ -5,7 +5,7 @@ import NewChatPage from './components/NewChatPage';
 import ChatInterface from './components/ChatInterface';
 import TermsPage from './components/TermsPage';
 import AboutPage from './components/AboutPage';
-import SorryPage from './components/SorryPage';
+// import SorryPage from './components/SorryPage';
 import { migrateOldCollection } from './utils/sessionManager';
 import './styles/global.css';
 
