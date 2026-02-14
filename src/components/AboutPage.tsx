@@ -40,10 +40,10 @@ interface BadgeProps {
   label: string;
 }
 
-interface DeployBadgeProps {
-  label: string;
-  platform: string;
-}
+// interface DeployBadgeProps {
+//   label: string;
+//   platform: string;
+// }
 
 const ArrowDown = ({ color = colors.textLight }: ArrowProps) => (
   <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
@@ -110,22 +110,22 @@ const TechBadge = ({ label }: BadgeProps) => (
   </span>
 );
 
-const DeployBadge = ({ label, platform }: DeployBadgeProps) => (
-  <span
-    style={{
-      background: "rgba(16, 185, 129, 0.1)",
-      border: "1px solid rgba(16, 185, 129, 0.3)",
-      borderRadius: "6px",
-      padding: "4px 10px",
-      fontSize: "11px",
-      color: colors.accent,
-      fontFamily: "'JetBrains Mono', monospace",
-      fontWeight: 500,
-    }}
-  >
-    {label} → {platform}
-  </span>
-);
+// const DeployBadge = ({ label, platform }: DeployBadgeProps) => (
+//   <span
+//     style={{
+//       background: "rgba(16, 185, 129, 0.1)",
+//       border: "1px solid rgba(16, 185, 129, 0.3)",
+//       borderRadius: "6px",
+//       padding: "4px 10px",
+//       fontSize: "11px",
+//       color: colors.accent,
+//       fontFamily: "'JetBrains Mono', monospace",
+//       fontWeight: 500,
+//     }}
+//   >
+//     {label} → {platform}
+//   </span>
+// );
 
 export default function AboutPage() {
   return (
