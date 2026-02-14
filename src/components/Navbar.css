@@ -2,6 +2,7 @@
 /* This file exists for potential navbar-specific overrides */
 
 .about-button,
+.demo-button,
 .github-button {
   background-color: transparent;
   color: var(--color-primary);
@@ -20,7 +21,8 @@
   min-width: 36px;
 }
 
-.about-button {
+.about-button,
+.demo-button {
   margin-right: 0.5rem;
 }
 
@@ -34,6 +36,7 @@
 }
 
 .about-button:hover,
+.demo-button:hover,
 .github-button:hover {
   background-color: var(--color-primary);
   color: white;
@@ -45,6 +48,7 @@
   fill: white;
 }
 
+.demo-button:active,
 .about-button:active,
 .github-button:active {
   transform: translateY(0);

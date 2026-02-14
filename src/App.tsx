@@ -5,6 +5,7 @@ import NewChatPage from './components/NewChatPage';
 import ChatInterface from './components/ChatInterface';
 import TermsPage from './components/TermsPage';
 import AboutPage from './components/AboutPage';
+import DemoPage from './components/DemoPage';
 // import SorryPage from './components/SorryPage';
 import { migrateOldCollection } from './utils/sessionManager';
 import './styles/global.css';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route path="/new" element={<NewChatPage />} />
           <Route path="/chat/:sessionId" element={<ChatInterface />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/demo" element={<DemoPage />} />
           <Route path="/about" element={<AboutPage />} />
           {/* <Route path="/sorry" element={<SorryPage />} /> */}
           <Route path="*" element={<Navigate to="/" replace />} />
