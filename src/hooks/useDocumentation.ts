@@ -40,7 +40,7 @@ function parseErrorResponse(response: Response, errorData: any): string {
     
     // Invalid URLs (missing API documentation keywords)
     if (detail.includes('invalid urls') && detail.includes('api documentation keywords')) {
-      return `Invalid URLs detected. Currently we only support URLs containing keywords (api, doc, docs, documentation, reference, guide). \n\nThis ensures the service is used for API documentation only.`;
+      return `Invalid URLs detected. Some of the URLs you entered is not supported yet or may not contain recognizable API documentation`;
     }
     
     // Generic 400 error with detail
