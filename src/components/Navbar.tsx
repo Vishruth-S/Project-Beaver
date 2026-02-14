@@ -66,6 +66,12 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           About
         </button>
+        <button 
+          className="demo-button"
+          onClick={() => navigate('/demo')}
+        >
+          Demo
+        </button>
         <a 
           href="https://github.com/Vishruth-S/Project-Beaver/issues" 
           target="_blank" 
